@@ -1,6 +1,7 @@
 package com.vanessamatos.springBootMongoDB.services;
 
 import com.vanessamatos.springBootMongoDB.domain.User;
+import com.vanessamatos.springBootMongoDB.dto.UserDTO;
 import com.vanessamatos.springBootMongoDB.repository.UserRepository;
 import com.vanessamatos.springBootMongoDB.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,14 @@ public class UserService {
     public User findById(String id) {
         Optional<User> obj = userRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+    }
+
+    public User inserir(User user) {
+        return userRepository.insert(user);
+    }
+
+
+    public User fromDTO(UserDTO userDTO) {
+        return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
     }
 }
