@@ -1,5 +1,6 @@
 package com.vanessamatos.springBootMongoDB.resources;
 
+import com.vanessamatos.springBootMongoDB.domain.Post;
 import com.vanessamatos.springBootMongoDB.domain.User;
 import com.vanessamatos.springBootMongoDB.dto.UserDTO;
 import com.vanessamatos.springBootMongoDB.services.UserService;
@@ -54,5 +55,11 @@ public class UserResource {
         user.setId(id);
         user = userService.update(user);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value="/{id}/posts", method=RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
     }
 }
